@@ -25,7 +25,7 @@ class UserController extends Controller
         }
 
         // return response()->json(compact('token'));
-        $name = DB::table('users')->where('id',1)->pluck('name')->first();
+        $name = DB::table('users')->where('email',$request->email)->pluck('name')->first();
         return response()->json([
             'token' => $token,
             'name' => $name
