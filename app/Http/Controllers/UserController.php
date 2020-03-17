@@ -79,4 +79,24 @@ class UserController extends Controller
 
         return response()->json(compact('user'));
     }
+
+    public function logout(Request $request)
+    {
+        // Get JWT Token from the request header key "Authorization"
+        $token = $request->header('Authorization');
+        // Invalidate the token
+        try {
+            JWTAuth::invalidate($token);
+            return response()->json([
+                'status' => 'success',
+                'message'=> "User successfully logged out."
+            ]);
+        } catch (JWTException $e) {
+            // something went wrong whilst attempting to encode the token
+            return response()->json([
+              'status' => 'error',
+              'message' => 'Failed to logout, please try again.'
+            ], 500);
+        }
+    }
 }
